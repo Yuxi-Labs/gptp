@@ -1,0 +1,20 @@
+{
+  "name": "Test Prompt",
+  "description": "Basic hello world test prompt.",
+  "version": "1.0",
+  "system": "You are a friendly assistant.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Say hello to {{name}}"
+    }
+  ],
+  "variables": [
+    {
+      "name": "name",
+      "description": "Name to greet",
+      "required": true,
+      "example": "Fiona"
+    }
+  ]
+}

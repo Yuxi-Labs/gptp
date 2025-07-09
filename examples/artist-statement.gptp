@@ -1,0 +1,55 @@
+{
+  "$schema": "../gptp.schema.json",
+  "name": "Artist Statement Generator",
+  "description": "Helps visual artists write compelling artist statements for grants, galleries, and portfolios.",
+  "version": "1.0",
+  "system": "You are an experienced art writer and curator. You help artists express the intention behind their work in clear but evocative language.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on the following details, write a professional artist statement:\n\n- Medium: {{medium}}\n- Themes: {{themes}}\n- Influences: {{influences}}\n- Current project: {{project_description}}\n- Tone: {{tone}}\n\nMake the statement 1–2 paragraphs, suitable for a portfolio or gallery submission."
+    }
+  ],
+  "variables": [
+    {
+      "name": "medium",
+      "description": "The primary medium of the artist (e.g., sculpture, oil painting, digital installation)",
+      "required": true,
+      "example": "Mixed-media installation"
+    },
+    {
+      "name": "themes",
+      "description": "The core themes explored in their work",
+      "required": true,
+      "example": "Memory, migration, and environmental grief"
+    },
+    {
+      "name": "influences",
+      "description": "Artistic, philosophical, or cultural influences",
+      "required": false,
+      "example": "Anselm Kiefer, Ursula Le Guin, post-humanist theory"
+    },
+    {
+      "name": "project_description",
+      "description": "A short description of their current work or project",
+      "required": true,
+      "example": "An immersive sound installation built from field recordings of melting glaciers"
+    },
+    {
+      "name": "tone",
+      "description": "The tone or voice they want the statement to have",
+      "required": false,
+      "example": "Poetic but accessible"
+    }
+  ],
+  "metadata": {
+    "tags": ["art", "statement", "writing", "portfolio"],
+    "created_by": "you@probably.me",
+    "created_at": "2025-07-09T19:00:00Z",
+    "model_compatibility": ["gpt-4", "gpt-3.5-turbo"]
+  },
+  "rendering": {
+    "style": "single-shot",
+    "instructions_position": "top"
+  }
+}
