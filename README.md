@@ -1,4 +1,4 @@
-# <img src="./images/icons/GPTP Icon v2.png" alt="GPTP Icon" width="150"/> GPT Prompt (GPTP)
+# <img src="./images/icons/GPTP Icon v2.png" alt="GPTP Icon" width="100"/> GPT Prompt (GPTP)
 
 GPTP (`.gptp`) is a portable, structured file format for packaging, transporting and exchanging prompts across Generative Pre-trained Transformer (GPT) models.
 
