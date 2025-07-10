@@ -9,7 +9,7 @@ It is designed for compatibility with GPT-based systems like:
 - Claude 3 (convert .gptp to Claude’s Human: / Assistant: format)
 - LLaMA / Mistral (render into instruction-style prompts using templates)
 
-The goal of `.gptp` is to:
+The goal of GPTP is to:
 - Standardize reusable prompt design
 - Enable editing across tools (web, CLI, IDE)
 - Support variable injection and metadata
@@ -37,7 +37,7 @@ This format supports:
 ## Tools
 
 You can:
-- Use `.gptp` in CLI runners or scripts
+- Use GPTP in CLI runners or scripts
 - Load it into web prompt editors
 - Validate it in IDEs such as VS Code using `$schema`
 
