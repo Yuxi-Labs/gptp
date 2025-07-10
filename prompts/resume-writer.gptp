@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema/gptp.schema.json",
+  "name": "Resume Writer",
+  "description": "Generates a professional resume summary paragraph based on user experience and target job.",
+  "version": "1.0",
+  "system": "You are a professional resume writer who crafts concise, compelling summaries tailored to specific roles.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a resume summary paragraph for someone with experience in {{experience}} who is applying for a {{target_role}} position. Make it sound confident, polished, and job-appropriate."
+    }
+  ],
+  "variables": [
+    {
+      "name": "experience",
+      "description": "The user's professional background, industries, and skills",
+      "required": true,
+      "example": "project management in tech startups, Agile workflows, stakeholder communication"
+    },
+    {
+      "name": "target_role",
+      "description": "The job title or position being applied for",
+      "required": true,
+      "example": "Product Manager"
+    }
+  ],
+  "metadata": {
+    "tags": ["resume", "summary", "career", "professional", "writing"],
+    "created_by": "you@probably.me",
+    "created_at": "2025-07-10T14:30:00Z",
+    "model_compatibility": ["gpt-4", "gpt-3.5-turbo"]
+  },
+  "rendering": {
+    "style": "single-shot",
+    "instructions_position": "top"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "$schema": "../gptp.schema.json",
+  "$schema": "../schema/gptp.schema.json",
   "name": "Artist Statement Generator",
   "description": "Helps visual artists write compelling artist statements for grants, galleries, and portfolios.",
   "version": "1.0",
