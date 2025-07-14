@@ -2,42 +2,49 @@
 
 ```jsonc
 {
-"name": "string",                      // Title of the prompt
-"description": "string",               // What it does
-"version": "string",                   // Format version (e.g. "1.0")
+"$schema": "./schema/gptp.schema.json", // Enables schema validation & autocomplete
 
-"system": "string",                    // Optional system prompt (instructions to the assistant)
+"name": "string",                        // Title of the prompt
+"description": "string",                 // What it does
+"version": "string",                     // Format version (e.g. "1.0")
 
-"messages": [                          // Core prompt turns (chat style)
+"system": "string",                      // Optional system prompt (instructions to the assistant)
+
+"messages": [                            // Core prompt turns (chat style)
 {
 "role": "system" | "user" | "assistant",
 "content": "string"
 }
 ],
 
-"variables": [                         // Optional: templated inputs
+"variables": [                           // Optional: templated inputs
 {
-"name": "string",                  // e.g. "topic"
-"description": "string",           // Helpful for UI/display
+"name": "string",                    // e.g. "topic"
+"description": "string",             // Helpful for UI/display
 "required": true | false,
-"example": "string"                // Optional example value
+"example": "string"                  // Optional example value
 }
 ],
 
-"metadata": {                          // Optional extra info
-"tags": ["string"],                  // Keywords
-"created_by": "string",              // Author or org
-"created_at": "ISO 8601 datetime",   // e.g. "2025-07-09T16:00:00Z"
-"model_compatibility": [             // Compatible GPT-style models
+"metadata": {                            // Optional extra info
+"tags": ["string"],                    // Keywords
+"created_by": "string",                // Author or org
+"created_at": "2025-07-09T16:00:00Z",  // ISO 8601 format
+"model_compatibility": [               // Compatible GPT-style models
 "gpt-4",
 "gpt-3.5-turbo",
 "claude-3-opus"
 ]
 },
 
-"rendering": {                         // UI/display hints
-"style": "chat" | "single-shot" | "template",
-"instructions_position": "top" | "inline" | "none"
-}
+"rendering": {                           // UI/display hints
+"style": "chat" | "single-shot" | "template",     // Preferred UI format
+"instructions_position": "top" | "inline" | "none" // Where system prompt appears in UI
+},
+
+"output_format": "markdown" | "json" | "plain-text" | "html", // Optional: expected response format
+
+// Future support (optional)
+// "extends": "./base-prompt.gptp"        // Optional: inherit fields from another prompt
 }
 ```

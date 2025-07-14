@@ -4,7 +4,7 @@
   "title": "GPT Prompt Package (.gptp)",
   "type": "object",
   "required": ["name", "description", "version", "messages"],
-  "additionalProperties": true,
+  "additionalProperties": false,
 
   "properties": {
     "name": {
@@ -132,6 +132,15 @@
           "description": "Where to place system instructions"
         }
       }
+    },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json", "plain-text", "html"],
+      "description": "Expected format of the model output"
+    },
+    "extends": {
+      "type": "string",
+      "description": "Optional path to another .gptp file to extend"
     }
   }
 }

@@ -33,6 +33,13 @@ This format supports:
   "variables": [{ "name": "topic", "required": true }]
 }
 ```
+## VS Code Integration
+
+To enable schema validation and autocomplete in VS Code, add this line at the top of your `.gptp` files:
+
+```json
+"$schema": "./schema/gptp.schema.json",
+```
 
 ## Tools
 
@@ -41,7 +48,27 @@ You can:
 - Load it into web prompt editors
 - Validate it in IDEs such as VS Code using `$schema`
 
+## 🛠 Usage
+
+### Validate a `.gptp` file:
+
+```bash
+node tools/gptp-validate.js prompts/test-prompt.gptp
+```
+
+### Render a .gptp file with variables:
+
+```bash
+node tools/gptp-render.js prompts/artist-statement.gptp inputs/artist-statement.input.json
+```
+
+### Run CLI script (example wrapper):
+
+```bash
+node tools/gptp-run.js --file prompts/resume-writer.gptp --vars inputs/resume-writer.input.json
+```
+
 ## References
 
-- [GPTP Specification](./gptp-spec.md) – human-readable spec
-- [GPTP Schema](./gptp.schema.json) – validation schema
+- [GPTP Specification](/docs/gptp-spec.md) – human-readable spec
+- [GPTP Schema](/schema/gptp.schema.json) – validation schema
