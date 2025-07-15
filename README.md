@@ -48,7 +48,7 @@ You can:
 - Load it into web prompt editors
 - Validate it in IDEs such as VS Code using `$schema`
 
-## 🛠 Usage
+## Usage
 
 ### Validate a `.gptp` file:
 
