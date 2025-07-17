@@ -21,9 +21,6 @@
 
   <!-- License -->
   <img src="https://img.shields.io/github/license/Yuxi-Labs/gptp" alt="License" />
-
-  <img src="https://img.shields.io/github/check-runs/Yuxi-Labs/gptp/production" alt="Check Runs" />
-
 </p>
 
 
