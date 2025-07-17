@@ -1,13 +1,28 @@
 # <img src="./images/icons/GPTP Icon.png" width="400" alt="GPTP Icon" />
 
 <p>
-  <img src="https://img.shields.io/github/actions/workflow/status/Yuxi-Labs/gptp/ci.yml?branch=production" alt="CI" />
-  <img src="https://img.shields.io/github/package-json/v/Yuxi-Labs/gptp" alt="Version" />
-  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
-  <img src="https://img.shields.io/badge/node-%3E=18-blue" alt="Node.js >=18" />
-  <img src="https://img.shields.io/badge/validated%20by-ajv-8.17.1-blueviolet" alt="Validated by AJV" />
-  <img src="https://img.shields.io/badge/code%20style-prettier-ff69b4" alt="Code style: Prettier" />
+  <!-- Build status -->
+  <img src="https://img.shields.io/github/actions/workflow/status/Yuxi-Labs/gptp/ci.yml?branch=production" alt="Build Status" />
+
+  <!-- Latest Release -->
+  <img src="https://img.shields.io/github/v/release/Yuxi-Labs/gptp?include_prereleases&sort=semver" alt="Latest Release" />
+
+  <!-- Open Issues -->
+  <img src="https://img.shields.io/github/issues/Yuxi-Labs/gptp" alt="Open Issues" />
+
+  <!-- Pull Requests -->
+  <img src="https://img.shields.io/github/issues-pr/Yuxi-Labs/gptp" alt="Pull Requests" />
+
+  <!-- Last Commit -->
+  <img src="https://img.shields.io/github/last-commit/Yuxi-Labs/gptp" alt="Last Commit" />
+
+  <!-- Contributors -->
+  <img src="https://img.shields.io/github/contributors/Yuxi-Labs/gptp" alt="Contributors" />
+
+  <!-- License -->
+  <img src="https://img.shields.io/github/license/Yuxi-Labs/gptp" alt="License" />
 </p>
+
 
 
 GPT Prompt (GPTP) is a portable, structured file format (`.gptp`) for packaging, transporting and exchanging prompts across Generative Pre-trained Transformer (GPT) models.
