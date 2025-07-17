@@ -1,5 +1,15 @@
 # <img src="./images/icons/GPTP Icon.png" width="400" alt="GPTP Icon" />
 
+<p>
+  <img src="https://img.shields.io/github/actions/workflow/status/Yuxi-Labs/gptp/ci.yml?branch=production" alt="CI" />
+  <img src="https://img.shields.io/github/package-json/v/Yuxi-Labs/gptp" alt="Version" />
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+  <img src="https://img.shields.io/badge/node-%3E=18-blue" alt="Node.js >=18" />
+  <img src="https://img.shields.io/badge/validated%20by-ajv-8.17.1-blueviolet" alt="Validated by AJV" />
+  <img src="https://img.shields.io/badge/code%20style-prettier-ff69b4" alt="Code style: Prettier" />
+</p>
+
+
 GPT Prompt (GPTP) is a portable, structured file format (`.gptp`) for packaging, transporting and exchanging prompts across Generative Pre-trained Transformer (GPT) models.
 
 It is designed for compatibility with GPT-based systems like:
