@@ -1,8 +1,43 @@
 {
+  "name": "gptp",
+  "version": "1.0.0",
+  "description": "A file format for packaging, transporting and exchanging prompts across GPT models. ",
+  "type": "module",
+  "main": "tools/gptp-run.js",
+  "bin": {
+    "gptp-validate": "./tools/gptp-validate.js",
+    "gptp-render": "./tools/gptp-render.js",
+    "gptp-run": "./tools/gptp-run.js"
+  },
+  "scripts": {
+    "validate": "node tools/gptp-validate.js prompts/test-prompt.gptp",
+    "render": "node tools/gptp-render.js prompts/example.gptp inputs/example.input.json",
+    "run": "node tools/gptp-run.js --file prompts/example.gptp --vars inputs/example.input.json",
+    "format": "prettier --write .",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "gptp",
+    "prompt",
+    "gpt",
+    "llm",
+    "schema",
+    "jsonschema",
+    "ai",
+    "cli"
+  ],
+  "author": "Yuxi Labs",
+  "license": "MIT",
   "dependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
+    "chalk": "^5.3.0",
     "dotenv": "^17.2.0",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5"
   }
 }
