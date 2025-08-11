@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/github/contributors/Yuxi-Labs/gptp" alt="Contributors" />
 
   <!-- License -->
-  <img src="https://img.shields.io/github/license/Yuxi-Labs/gptp" alt="License" />
+  <img src="https://img.shields.io/github/license/yuxi-labs/gptp" alt="License" />
 </p>
 
 
