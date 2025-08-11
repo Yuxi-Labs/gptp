@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/github/contributors/Yuxi-Labs/gptp" alt="Contributors" />
 
   <!-- License -->
-  <img src="https://img.shields.io/github/license/yuxi-labs/gptp" alt="License" />
+  ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 </p>
 
 
