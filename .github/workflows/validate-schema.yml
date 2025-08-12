@@ -34,7 +34,7 @@ jobs:
           npx -y ajv-cli@5 compile \
             --spec=draft7 \
             --allow-union-types \
-            --require=ajv-formats \
+            -c ajv-formats \
             -s schema/gptp.schema.json
 
       # 2) Validate all example .gptp files (if any)
@@ -51,6 +51,6 @@ jobs:
           npx -y ajv-cli@5 validate \
             --spec=draft7 \
             --allow-union-types \
-            --require=ajv-formats \
+            -c ajv-formats \
             -s schema/gptp.schema.json \
             -d ${files[@]}
