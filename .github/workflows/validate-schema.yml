@@ -15,6 +15,7 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,11 +25,12 @@ jobs:
         with:
           node-version: "20"
 
-      # Install CommonJS-compatible ajv-formats to satisfy ajv-cli@5's loader
+      # install formats plugin in CJS flavor so ajv-cli@5 can require() it
       - name: Install ajv-formats (CJS)
-        run: npm install --no-save ajv-formats@2.1.1
+        run: |
+          npm install --no-save ajv-formats@2.1.1
 
-      # 1) Meta-validate the schema (allow union types, enable formats via -c)
+      # 1) Meta-validate the schema
       - name: Compile (meta-validate) schema
         run: |
           npx -y ajv-cli@5 compile \
@@ -47,10 +49,9 @@ jobs:
             echo "No .gptp files in docs/examples/. Skipping data validation."
             exit 0
           fi
-          # Pass the expanded list of files to ajv validate
           npx -y ajv-cli@5 validate \
             --spec=draft7 \
             --allow-union-types \
             -c ajv-formats \
             -s schema/gptp.schema.json \
-            -d ${files[@]}
+            -d "docs/examples/**/*.gptp"
