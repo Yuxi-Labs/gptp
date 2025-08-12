@@ -24,14 +24,16 @@ jobs:
         with:
           node-version: "20"
 
-      # 1) Meta-validate the schema against draft-07
+      # 1) Meta-validate the schema (allow union types, enable formats)
       - name: Compile (meta-validate) schema
         run: |
           npx -y ajv-cli@5 compile \
             --spec=draft7 \
+            --allow-union-types \
+            --formats=full \
             -s schema/gptp.schema.json
 
-      # 2) Validate example .gptp files (if any)
+      # 2) Validate all example .gptp files (if any)
       - name: Validate examples against schema
         run: |
           shopt -s nullglob globstar
@@ -42,5 +44,7 @@ jobs:
           fi
           npx -y ajv-cli@5 validate \
             --spec=draft7 \
+            --allow-union-types \
+            --formats=full \
             -s schema/gptp.schema.json \
             -d "docs/examples/**/*.gptp"
