@@ -24,17 +24,22 @@ jobs:
         with:
           node-version: "20"
 
-      # 1) Meta-validate the schema (allow union types, enable formats)
+      # Install formats plugin so we can require it in ajv-cli@5
+      - name: Install ajv-formats
+        run: npm install --no-save ajv-formats
+
+      # 1) Meta-validate the schema (allow union types, enable formats via ajv-formats)
       - name: Compile (meta-validate) schema
         run: |
           npx -y ajv-cli@5 compile \
             --spec=draft7 \
             --allow-union-types \
-            --formats=full \
+            --require=ajv-formats \
             -s schema/gptp.schema.json
 
       # 2) Validate all example .gptp files (if any)
       - name: Validate examples against schema
+        shell: bash
         run: |
           shopt -s nullglob globstar
           files=(docs/examples/**/*.gptp)
@@ -42,9 +47,10 @@ jobs:
             echo "No .gptp files in docs/examples/. Skipping data validation."
             exit 0
           fi
+          # Pass the expanded list of files to ajv validate
           npx -y ajv-cli@5 validate \
             --spec=draft7 \
             --allow-union-types \
-            --formats=full \
+            --require=ajv-formats \
             -s schema/gptp.schema.json \
-            -d "docs/examples/**/*.gptp"
+            -d ${files[@]}
