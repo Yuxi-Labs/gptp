@@ -24,11 +24,11 @@ jobs:
         with:
           node-version: "20"
 
-      # Install formats plugin so we can require it in ajv-cli@5
-      - name: Install ajv-formats
-        run: npm install --no-save ajv-formats
+      # Install CommonJS-compatible ajv-formats to satisfy ajv-cli@5's loader
+      - name: Install ajv-formats (CJS)
+        run: npm install --no-save ajv-formats@2.1.1
 
-      # 1) Meta-validate the schema (allow union types, enable formats via ajv-formats)
+      # 1) Meta-validate the schema (allow union types, enable formats via -c)
       - name: Compile (meta-validate) schema
         run: |
           npx -y ajv-cli@5 compile \
