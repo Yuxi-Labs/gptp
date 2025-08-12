@@ -1,4 +1,4 @@
-# <img src="./images/icons/GPTP Icon.png" width="400" alt="GPTP Icon" />
+# <img src="./assets/images/icons/GPTP Icon.png" width="400" alt="GPTP Icon" />
 
 <p>
   <!-- Build status -->
@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/github/contributors/Yuxi-Labs/gptp" alt="Contributors" />
 
   <!-- License -->
-  ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+  ![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
 </p>
 
 

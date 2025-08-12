@@ -1,0 +1,50 @@
+{
+  "$schema": "../schema/gptp.schema.json",
+  "name": "Short Story Generator",
+  "description": "Writes a short story based on a given setting and protagonist.",
+  "version": "1.1.0",
+  "system": "You are a creative fiction writer.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a short story set in {{setting}} with a protagonist named {{protagonist}}."
+    }
+  ],
+  "variables": [
+    {
+      "name": "setting",
+      "description": "Where the story takes place",
+      "required": true,
+      "example": "a post-apocalyptic desert"
+    },
+    {
+      "name": "protagonist",
+      "description": "Name of the main character",
+      "required": true,
+      "example": "Mira"
+    }
+  ],
+  "metadata": {
+    "tags": ["fiction", "storytelling"],
+    "created_by": "Prompt Lab",
+    "created_at": "2025-08-13T10:00:00Z",
+    "model_compatibility": ["gpt-4"]
+  },
+  "rendering": {
+    "style": "chat",
+    "instructions_position": "top"
+  },
+  "params": {
+    "model": "gpt-4",
+    "temperature": 0.9,
+    "max_tokens": 800
+  },
+  "assets": [
+    {
+      "path": "assets/story-example.txt",
+      "media_type": "text/plain",
+      "purpose": "example",
+      "description": "Example output format"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/gptp.schema.json",
+  "name": "Hello World Prompt",
+  "description": "Outputs a greeting to the given name.",
+  "version": "1.1.0",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Say hello to {{name}}."
+    }
+  ],
+  "variables": [
+    {
+      "name": "name",
+      "description": "The person to greet",
+      "required": true,
+      "example": "Alice"
+    }
+  ]
+}

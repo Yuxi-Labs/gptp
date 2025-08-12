@@ -1,0 +1,46 @@
+name: Validate GPTP schema
+
+on:
+  push:
+    paths:
+      - "schema/gptp.schema.json"
+      - "docs/examples/**/*.gptp"
+      - ".github/workflows/validate-schema.yml"
+  pull_request:
+    paths:
+      - "schema/gptp.schema.json"
+      - "docs/examples/**/*.gptp"
+      - ".github/workflows/validate-schema.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # 1) Meta-validate the schema against draft-07
+      - name: Compile (meta-validate) schema
+        run: |
+          npx -y ajv-cli@5 compile \
+            --spec=draft7 \
+            -s schema/gptp.schema.json
+
+      # 2) Validate example .gptp files (if any)
+      - name: Validate examples against schema
+        run: |
+          shopt -s nullglob globstar
+          files=(docs/examples/**/*.gptp)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No .gptp files in docs/examples/. Skipping data validation."
+            exit 0
+          fi
+          npx -y ajv-cli@5 validate \
+            --spec=draft7 \
+            -s schema/gptp.schema.json \
+            -d "docs/examples/**/*.gptp"

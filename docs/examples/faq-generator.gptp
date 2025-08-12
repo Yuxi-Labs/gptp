@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema/gptp.schema.json",
+  "name": "FAQ Generator",
+  "description": "Generates a JSON FAQ from a given topic.",
+  "version": "1.1.0",
+  "system": "You are an assistant that writes FAQs in JSON format.",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Create an FAQ about {{topic}}."
+    }
+  ],
+  "variables": [
+    {
+      "name": "topic",
+      "description": "The subject for the FAQ",
+      "required": true,
+      "example": "cloud computing"
+    }
+  ],
+  "output_format": "json",
+  "output_schema": {
+    "type": "object",
+    "required": ["questions"],
+    "properties": {
+      "questions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["q", "a"],
+          "properties": {
+            "q": { "type": "string" },
+            "a": { "type": "string" }
+          }
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+}
