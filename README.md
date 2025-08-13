@@ -32,7 +32,7 @@ Each `.gptp` file is a standalone JSON object that includes all necessary inform
 * **Optional system instructions** (`system`)
 * **Optional configuration**: rendering hints, execution parameters, output expectations, assets, vision inputs, tests, tools, and connections
 
-The format is governed by a strict JSON Schema with `additionalProperties: false` at the top level. All `.gptp` documents must explicitly declare the schema version via a `$schema` field.
+The format is based on a strict JSON schema with `additionalProperties: false` at the top level. All `.gptp` files must declare a `$schema` field that is used to validate them.
 
 ## Required Fields
 
@@ -76,9 +76,9 @@ The format is governed by a strict JSON Schema with `additionalProperties: false
 
 ## Schema Version
 
-All `.gptp` files must include a `$schema` field pointing to the canonical schema URL. For version `1.1.0`, that is:
+The `$schema` field points to the canonical schema URL. For version `1.1.0`, that is:
 
-```
+```bash
 https://raw.githubusercontent.com/Yuxi-Labs/gptp/refs/tags/v1.1.0/schema/gptp.schema.json
 ```
 
