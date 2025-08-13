@@ -32,7 +32,7 @@ Each `.gptp` file is a standalone JSON object that includes all necessary inform
 * **Optional system instructions** (`system`)
 * **Optional configuration**: rendering hints, execution parameters, output expectations, assets, vision inputs, tests, tools, and connections
 
-The format is based on a strict JSON schema with `additionalProperties: false` at the top level. All `.gptp` files must declare a `$schema` field that is used to validate them.
+GPTP is based on a strict JSON schema with `additionalProperties: false` at the top level. All `.gptp` files must declare a `$schema` field that is used to validate them.
 
 ## Required Fields
 
