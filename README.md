@@ -20,7 +20,7 @@
   <img src="https://img.shields.io/badge/License-MIT-orange.svg" alt="License: MIT" />
 </p>
 
-**GPT Prompt (GPTP)** is a structured and portable JSON-based file format that defines reusable, templated prompt packages for use with Generative Pre-trained Transformer (GPT) models. GPTP files have the extension `.gptp` and are versioned, schema-validated documents intended for use across GPT-compatible systems.
+**GPT Prompt (GPTP)** is a structured and portable JSON-based file format that defines reusable, templated prompt packages for use with Generative Pre-trained Transformer (GPT) models. GPTP files have the extension `.gptp` and are versioned, schema-validated files intended for use across GPT-compatible systems.
 
 ## Format Overview
 
