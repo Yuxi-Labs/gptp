@@ -4,7 +4,6 @@
   "title": "GPT Prompt Package (.gptp) v1.1.0",
   "type": "object",
   "required": ["name", "description", "version", "messages"],
-  "additionalProperties": false,
 
   "properties": {
     "$schema": {
@@ -14,13 +13,11 @@
     },
     "name": { "type": "string", "minLength": 1 },
     "description": { "type": "string", "minLength": 1 },
-
     "version": {
       "type": "string",
       "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$",
       "description": "Prompt semver (e.g. 1.1.0)"
     },
-
     "system": { "type": "string", "minLength": 1 },
 
     "messages": {
@@ -38,37 +35,48 @@
     },
 
     "variables": {
-      "type": "array",
-      "items": {
+      "type": "object",
+      "additionalProperties": {
         "type": "object",
-        "required": ["name"],
-        "additionalProperties": false,
+        "required": ["type"],
         "properties": {
-          "name": { "type": "string", "minLength": 1 },
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "integer", "boolean", "array", "object"]
+          },
           "description": { "type": "string" },
-          "required": { "type": "boolean", "default": true },
-          "example": { "type": "string" },
-
-          "type": { "type": "string", "enum": ["string","number","integer","boolean","array","object"] },
-          "enum": { "type": "array", "items": { "type": ["string","number","boolean"] } },
+          "example": {},
+          "enum": {
+            "type": "array",
+            "items": { "type": ["string", "number", "boolean"] }
+          },
           "pattern": { "type": "string" },
           "minLength": { "type": "integer", "minimum": 0 },
           "maxLength": { "type": "integer", "minimum": 0 },
           "minimum": { "type": "number" },
           "maximum": { "type": "number" },
           "default": {}
-        }
+        },
+        "additionalProperties": true
       }
     },
 
     "metadata": {
       "type": "object",
-      "additionalProperties": false,
+      "description": "Informational metadata (e.g. tags, creation info)",
+      "additionalProperties": true,
       "properties": {
-        "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
         "created_by": { "type": "string" },
         "created_at": { "type": "string", "format": "date-time" },
-        "model_compatibility": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        "model_compatibility": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        }
       }
     },
 
@@ -76,12 +84,21 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "style": { "type": "string", "enum": ["chat","single-shot","template"] },
-        "instructions_position": { "type": "string", "enum": ["top","inline","none"] }
+        "style": {
+          "type": "string",
+          "enum": ["chat", "single-shot", "template"]
+        },
+        "instructions_position": {
+          "type": "string",
+          "enum": ["top", "inline", "none"]
+        }
       }
     },
 
-    "output_format": { "type": "string", "enum": ["markdown","json","plain-text","html"] },
+    "output_format": {
+      "type": "string",
+      "enum": ["markdown", "json", "plain-text", "html"]
+    },
 
     "output_schema": {
       "type": "object",
@@ -99,7 +116,11 @@
         "stop": {
           "oneOf": [
             { "type": "string" },
-            { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+            {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1
+            }
           ]
         },
         "seed": { "type": "integer" },
@@ -126,8 +147,7 @@
             }
           }
         }
-      },
-      "description": "Provider configs; values may include ${env:VAR} placeholders"
+      }
     },
 
     "assets": {
@@ -139,20 +159,30 @@
         "properties": {
           "path": { "type": "string" },
           "media_type": { "type": "string" },
-          "purpose": { "type": "string", "enum": ["context","example","citation","other"] },
+          "purpose": {
+            "type": "string",
+            "enum": ["context", "example", "citation", "other"]
+          },
           "description": { "type": "string" }
         }
       }
     },
 
-    "license": { "type": "string", "description": "SPDX identifier, e.g. MIT, Apache-2.0" },
+    "license": {
+      "type": "string",
+      "description": "SPDX identifier, e.g. MIT, Apache-2.0"
+    },
+
     "usage_notes": { "type": "string" },
 
     "provenance": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
         "signature": { "type": "string" }
       }
     },
@@ -186,7 +216,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["name","media_type"],
+            "required": ["name", "media_type"],
             "additionalProperties": false,
             "properties": {
               "name": { "type": "string" },
@@ -202,18 +232,34 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name","input"],
-        "additionalProperties": false,
+        "required": ["input"],
+        "additionalProperties": true,
         "properties": {
           "name": { "type": "string" },
           "input": { "type": "object" },
-          "expect_contains": { "type": "array", "items": { "type": "string" } },
+          "expect_contains": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
           "expect_exact": { "type": "string" },
-          "expect_json_schema": { "type": "object" }
+          "expect_json_schema": { "type": "object" },
+          "expect": {
+            "type": ["string", "number", "object", "array", "boolean", "null"]
+          }
         }
       }
     },
 
-    "extends": { "type": "string", "description": "Relative path to a base .gptp" }
-  }
+    "extends": {
+      "type": "string",
+      "description": "Relative path to a base .gptp"
+    }
+  },
+
+  "patternProperties": {
+    "^(parameters|output_contract|project)$": {},
+    "^x-": {}
+  },
+
+  "additionalProperties": false
 }
