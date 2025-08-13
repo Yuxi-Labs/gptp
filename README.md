@@ -1,9 +1,6 @@
 # <img src="./assets/images/icons/GPTP Icon.png" width="400" alt="GPTP Icon" />
 
 <p>
-  <!-- Build status -->
-  <img src="https://img.shields.io/github/actions/workflow/status/Yuxi-Labs/gptp/ci.yml?branch=production" alt="Build Status" />
-
   <!-- Latest Release -->
   <img src="https://img.shields.io/github/v/release/Yuxi-Labs/gptp?include_prereleases&sort=semver" alt="Latest Release" />
 
