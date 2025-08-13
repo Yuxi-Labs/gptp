@@ -25,12 +25,10 @@ jobs:
         with:
           node-version: "20"
 
-      # Install CJS-compatible ajv-cli and ajv-formats locally
       - name: Install AJV CLI and formats
         run: |
           npm install --no-save ajv-cli@5.0.0 ajv-formats@1.6.1
 
-      # 1) Meta-validate the schema
       - name: Compile (meta-validate) schema
         run: |
           npx ajv compile \
@@ -39,16 +37,14 @@ jobs:
             -c ajv-formats \
             -s schema/gptp.schema.json
 
-      # 2) Validate all example .gptp files (if any)
       - name: Validate examples against schema
-        shell: bash
         run: |
-          shopt -s nullglob globstar
-          files=(docs/examples/**/*.gptp)
-          if [ ${#files[@]} -eq 0 ]; then
+          count=$(find docs/examples -name '*.gptp' | wc -l)
+          if [ "$count" -eq 0 ]; then
             echo "No .gptp files in docs/examples/. Skipping data validation."
             exit 0
           fi
+
           npx ajv validate \
             --spec=draft7 \
             --allow-union-types \
@@ -56,6 +52,5 @@ jobs:
             -s schema/gptp.schema.json \
             -d "docs/examples/**/*.gptp"
 
-      # Optional: Clean up node_modules if you're not caching
       - name: Cleanup
         run: rm -rf node_modules package-lock.json
