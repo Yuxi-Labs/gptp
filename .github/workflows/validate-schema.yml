@@ -1,4 +1,4 @@
-name: Validate GPTP schema
+name: Validate GPTP Schema
 
 on:
   push:
