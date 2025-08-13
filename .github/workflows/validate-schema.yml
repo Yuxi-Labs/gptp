@@ -17,49 +17,60 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Use Node 20
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      # Install AJV CLI and formats (CJS-compatible)
       - name: Install AJV CLI and formats
         run: |
-          npm install --no-save ajv-cli@5.0.0 ajv-formats@1.6.1
+          npm install --no-save ajv@8 ajv-formats@2
 
-      # 1) Meta-validate the schema
-      - name: Compile (meta-validate) schema
+      - name: Validate schema examples (with ajv-formats)
         run: |
-          npx ajv compile \
-            --spec=draft7 \
-            --allow-union-types \
-            -c ajv-formats \
-            -s schema/gptp.schema.json
+          node <<'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const Ajv = require('ajv').default;
+          const addFormats = require('ajv-formats');
 
-      # 2) Validate all example .gptp files (if any)
-      - name: Validate examples against schema
-        run: |
-          files=$(find docs/examples -name '*.gptp')
-          if [ -z "$files" ]; then
-            echo "No .gptp files in docs/examples/. Skipping data validation."
-            exit 0
-          fi
+          const ajv = new Ajv({ strict: true, allowUnionTypes: true });
+          addFormats(ajv);
 
-          echo "Validating the following files:"
-          echo "$files"
+          const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
+          const validate = ajv.compile(schema);
 
-          datalist=$(echo "$files" | xargs -n1 printf -- "-d %s ")
+          const exampleDir = 'docs/examples';
+          const files = fs.readdirSync(exampleDir).filter(f => f.endsWith('.gptp'));
 
-          eval npx ajv validate \
-            --spec=draft7 \
-            --allow-union-types \
-            -c ajv-formats \
-            -s schema/gptp.schema.json \
-            $datalist
+          if (files.length === 0) {
+            console.log("No .gptp files found. Skipping.");
+            process.exit(0);
+          }
 
-      # Optional cleanup
+          let failures = 0;
+
+          for (const file of files) {
+            const filePath = path.join(exampleDir, file);
+            const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+            const valid = validate(data);
+            if (!valid) {
+              console.error(`❌ ${file} failed validation:`);
+              console.error(validate.errors);
+              failures++;
+            } else {
+              console.log(`✅ ${file} passed`);
+            }
+          }
+
+          if (failures > 0) {
+            process.exit(1);
+          }
+          EOF
+
       - name: Cleanup
         run: rm -rf node_modules package-lock.json
