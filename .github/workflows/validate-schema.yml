@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "20"
 
-      # Install AJV CLI and formats (CJS compatible)
+      # Install AJV CLI and formats (CJS-compatible)
       - name: Install AJV CLI and formats
         run: |
           npm install --no-save ajv-cli@5.0.0 ajv-formats@1.6.1
@@ -51,13 +51,15 @@ jobs:
           echo "Validating the following files:"
           echo "$files"
 
-          npx ajv validate \
+          datalist=$(echo "$files" | xargs -n1 printf -- "-d %s ")
+
+          eval npx ajv validate \
             --spec=draft7 \
             --allow-union-types \
             -c ajv-formats \
             -s schema/gptp.schema.json \
-            -d $files
+            $datalist
 
-      # Optional: Clean up node_modules if you’re not caching
+      # Optional cleanup
       - name: Cleanup
         run: rm -rf node_modules package-lock.json
