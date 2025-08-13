@@ -10,20 +10,20 @@
       "content": "Write a short story set in {{setting}} with a protagonist named {{protagonist}}."
     }
   ],
-  "variables": [
-    {
-      "name": "setting",
+  "variables": {
+    "setting": {
+      "type": "string",
       "description": "Where the story takes place",
       "required": true,
       "example": "a post-apocalyptic desert"
     },
-    {
-      "name": "protagonist",
+    "protagonist": {
+      "type": "string",
       "description": "Name of the main character",
       "required": true,
       "example": "Mira"
     }
-  ],
+  },
   "metadata": {
     "tags": ["fiction", "storytelling"],
     "created_by": "Prompt Lab",

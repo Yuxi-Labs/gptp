@@ -10,14 +10,14 @@
       "content": "Create an FAQ about {{topic}}."
     }
   ],
-  "variables": [
-    {
-      "name": "topic",
+  "variables": {
+    "topic": {
+      "type": "string",
       "description": "The subject for the FAQ",
       "required": true,
       "example": "cloud computing"
     }
-  ],
+  },
   "output_format": "json",
   "output_schema": {
     "type": "object",

@@ -9,12 +9,12 @@
       "content": "Say hello to {{name}}."
     }
   ],
-  "variables": [
-    {
-      "name": "name",
+  "variables": {
+    "name": {
+      "type": "string",
       "description": "The person to greet",
       "required": true,
       "example": "Alice"
     }
-  ]
+  }
 }
