@@ -14,6 +14,7 @@ on:
 
 jobs:
   validate:
+    name: Validate schema and and example GPTP files
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +30,29 @@ jobs:
         run: |
           npm install --no-save ajv@8 ajv-formats@2
 
-      - name: Validate schema examples (with ajv-formats)
+      - name: ✅ Meta-validate gptp.schema.json
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const Ajv = require('ajv').default;
+          const addFormats = require('ajv-formats');
+
+          const ajv = new Ajv({ strict: true, allErrors: true });
+          addFormats(ajv);
+
+          const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
+          const valid = ajv.validateSchema(schema);
+
+          if (!valid) {
+            console.error("❌ gptp.schema.json is not a valid JSON Schema:");
+            console.error(ajv.errors);
+            process.exit(1);
+          }
+
+          console.log("✅ gptp.schema.json is valid");
+          EOF
+
+      - name: ✅ Validate example .gptp files
         run: |
           node <<'EOF'
           const fs = require('fs');
@@ -37,7 +60,7 @@ jobs:
           const Ajv = require('ajv').default;
           const addFormats = require('ajv-formats');
 
-          const ajv = new Ajv({ strict: true, allowUnionTypes: true });
+          const ajv = new Ajv({ strict: true, allowUnionTypes: true, allErrors: true });
           addFormats(ajv);
 
           const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
