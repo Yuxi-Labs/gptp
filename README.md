@@ -23,77 +23,89 @@
   ![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
 </p>
 
+**GPT Prompt (GPTP)** is a portable, structured JSON file format with the extension `.gptp`. It defines reusable, templated prompt packages for use with Generative Pre-trained Transformer (GPT) models. GPTP files are versioned, schema-validated documents intended for use across GPT-compatible systems.
 
+## Format Overview
 
-GPT Prompt (GPTP) is a portable, structured file format (`.gptp`) for packaging, transporting and exchanging prompts across Generative Pre-trained Transformer (GPT) models.
+Each `.gptp` file is a standalone JSON object that includes all necessary information to define a reusable prompt, including:
 
-It is designed for compatibility with GPT-based systems like:
-- OpenAI GPT-3.5 Turbo
-- OpenAI GPT-4
-- OpenAI GPT-4 Turbo
-- Claude 3 (convert .gptp to Claude’s Human: / Assistant: format)
-- LLaMA / Mistral (render into instruction-style prompts using templates)
+* **Metadata** (`name`, `description`, `version`)
+* **Role-based prompt turns** (`messages` array)
+* **Templated variables** (declared in `variables`, referenced via `{{var}}` syntax)
+* **Optional system instructions** (`system`)
+* **Optional configuration**: rendering hints, execution parameters, output expectations, assets, vision inputs, tests, tools, and connections
 
-The goal of GPTP is to:
-- Standardize reusable prompt design
-- Enable editing across tools (web, CLI, IDE)
-- Support variable injection and metadata
-- Validate structure via JSON Schema
+The format is governed by a strict JSON Schema with `additionalProperties: false` at the top level. All `.gptp` documents must explicitly declare the schema version via a `$schema` field.
 
-This format supports:
-- Role-based message prompts (`system`, `user`, `assistant`)
-- Templated variables (`{{name}}`, `{{topic}}`)
-- Metadata (`tags`, `created_by`, `compatible_models`)
-- Rendering preferences for UI and API use
-
-## Example
+## Required Fields
 
 ```json
 {
-  "name": "My Prompt",
-  "description": "Writes an intro paragraph",
-  "version": "1.0",
-  "system": "You are a professional writer.",
-  "messages": [{ "role": "user", "content": "Write an intro about {{topic}}" }],
-  "variables": [{ "name": "topic", "required": true }]
+  "$schema": "./schema/gptp.schema.json",
+  "name": "Prompt Name",
+  "description": "What this prompt does",
+  "version": "1.1.0",
+  "messages": [
+    { "role": "user", "content": "Say hello to {{name}}" }
+  ]
 }
 ```
-## VS Code Integration
 
-To enable schema validation and autocomplete in VS Code, add this line at the top of your `.gptp` files:
+## Supported Fields
 
-```json
-"$schema": "./schema/gptp.schema.json",
+| Key             | Required | Type   | Notes                                          |
+| --------------- | -------- | ------ | ---------------------------------------------- |
+| `name`          | Yes      | string | Title of the prompt                            |
+| `description`   | Yes      | string | Human-readable summary                         |
+| `version`       | Yes      | string | Semver (e.g. `1.1.0`)                          |
+| `messages`      | Yes      | array  | List of `{role, content}` turns                |
+| `system`        | No       | string | High-level instruction                         |
+| `variables`     | No       | array  | Input parameters (templated with `{{var}}`)    |
+| `metadata`      | No       | object | Tags, author, creation date, compatibility     |
+| `rendering`     | No       | object | UI/display hints                               |
+| `output_format` | No       | string | `markdown` \| `json` \| `plain-text` \| `html` |
+| `output_schema` | No       | object | JSON Schema for expected output                |
+| `params`        | No       | object | Model call parameters                          |
+| `connections`   | No       | object | Provider config using env substitution         |
+| `assets`        | No       | array  | Attachments with path + MIME type              |
+| `tools`         | No       | array  | Tool/function declarations                     |
+| `vision`        | No       | object | Expected image inputs                          |
+| `tests`         | No       | array  | Self-checks for prompt output                  |
+| `extends`       | No       | string | Relative path to base `.gptp`                  |
+| `license`       | No       | string | SPDX ID (e.g., MIT)                            |
+| `usage_notes`   | No       | string | Freeform tips                                  |
+| `provenance`    | No       | object | SHA256 + optional signature                    |
+| `secrets`       | No       | array  | List of env var names required                 |
+
+## Schema Version
+
+All `.gptp` files must include a `$schema` field pointing to the canonical schema URL. For version `1.1.0`, that is:
+
+```
+https://raw.githubusercontent.com/Yuxi-Labs/gptp/refs/tags/v1.1.0/schema/gptp.schema.json
 ```
 
-## Tools
+## Format Status
 
-You can:
-- Use GPTP in CLI runners or scripts
-- Load it into web prompt editors
-- Validate it in IDEs such as VS Code using `$schema`
+* **Current schema**: v1.1.0
+* **Stability**: Stable
+* **Schema language**: JSON Schema Draft-07
+* **Media type** (non-registered): `application/vnd.yuxilabs.gptp+json`
+* **File extension**: `.gptp`
 
-## Usage
+## Compatibility
 
-### Validate a `.gptp` file:
+Tools and runtimes can render `.gptp` into formats suitable for:
 
-```bash
-node tools/gptp-validate.js prompts/test-prompt.gptp
-```
+* OpenAI models (e.g., GPT-3.5, GPT-4, GPT-4 Turbo)
+* Claude 3 (after conversion to `Human:` / `Assistant:` turns)
+* LLaMA / Mistral (via instruction-style templating)
 
-### Render a .gptp file with variables:
+## Specification
 
-```bash
-node tools/gptp-render.js prompts/artist-statement.gptp inputs/artist-statement.input.json
-```
+The full specification is available at:
 
-### Run CLI script (example wrapper):
+* [`/docs/gptp-spec.md`](docs/gptp-spec.md)
+* [`/schema/gptp.schema.json`](schema/gptp.schema.json)
 
-```bash
-node tools/gptp-run.js --file prompts/resume-writer.gptp --vars inputs/resume-writer.input.json
-```
-
-## References
-
-- [GPTP Specification](/docs/gptp-spec.md) – human-readable spec
-- [GPTP Schema](/schema/gptp.schema.json) – validation schema
+All conformance claims must validate against the schema referenced by `$schema`.
