@@ -1,6 +1,6 @@
 {
   "$doctype": "gptp",
-  "title": "gptp",
+  "title": "FAQ Generator",
   "description": "Generates a JSON FAQ from a given topic.",
   "system": "You are an assistant that writes FAQs in JSON format.",
   "messages": [
