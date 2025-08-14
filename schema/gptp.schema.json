@@ -14,7 +14,7 @@
 
     "$doctype": {
       "type": "string",
-      "pattern": "^(?i)gptp$",
+      "pattern": "^(gptp|GPTP)$",
       "description": "Document format identifier for GPT Prompt Package files"
     },
 
