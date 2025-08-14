@@ -1,5 +1,5 @@
 {
-  "$doctype": "gptp"
+  "$doctype": "gptp",
   "title": "Hello World Prompt",
   "description": "Outputs a greeting to the given name.",
   "messages": [
