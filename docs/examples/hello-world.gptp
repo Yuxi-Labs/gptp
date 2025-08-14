@@ -1,8 +1,7 @@
 {
-  "$schema": "../schema/gptp.schema.json",
-  "name": "Hello World Prompt",
+  "$doctype": "gptp"
+  "title": "Hello World Prompt",
   "description": "Outputs a greeting to the given name.",
-  "version": "1.1.0",
   "messages": [
     {
       "role": "user",

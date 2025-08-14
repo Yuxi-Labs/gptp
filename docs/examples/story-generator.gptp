@@ -1,8 +1,7 @@
 {
-  "$schema": "../schema/gptp.schema.json",
-  "name": "Short Story Generator",
+  "$doctype": "gptp",
+  "title": "Short Story Generator",
   "description": "Writes a short story based on a given setting and protagonist.",
-  "version": "1.1.0",
   "system": "You are a creative fiction writer.",
   "messages": [
     {

@@ -1,8 +1,7 @@
 {
-  "$schema": "../schema/gptp.schema.json",
-  "name": "FAQ Generator",
+  "$doctype": "gptp",
+  "title": "gptp",
   "description": "Generates a JSON FAQ from a given topic.",
-  "version": "1.1.0",
   "system": "You are an assistant that writes FAQs in JSON format.",
   "messages": [
     {
