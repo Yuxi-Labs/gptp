@@ -14,44 +14,45 @@ on:
 
 jobs:
   validate:
-    name: Validate schema and .gptp examples
+    name: Validate schema and example GPTP files
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧾 Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: 🧪 Use Node.js 20
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: 📦 Install AJV + formats
-        run: npm install --no-save ajv@8 ajv-formats@2
+      - name: Install AJV CLI and formats
+        run: |
+          npm install --no-save ajv@8 ajv-formats@2
 
-      - name: ✅ Meta-validate `gptp.schema.json`
+      - name: ✅ Meta-validate gptp.schema.json
         run: |
           node <<'EOF'
           const fs = require('fs');
           const Ajv = require('ajv').default;
           const addFormats = require('ajv-formats');
 
-          const ajv = new Ajv({ strict: true, allErrors: true });
+          const ajv = new Ajv({ strict: true, allowUnionTypes: true, allErrors: true });
           addFormats(ajv);
 
           const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
           const valid = ajv.validateSchema(schema);
 
           if (!valid) {
-            console.error("❌ Invalid JSON Schema in gptp.schema.json:");
+            console.error("❌ gptp.schema.json is not a valid JSON Schema:");
             console.error(ajv.errors);
             process.exit(1);
           }
 
-          console.log("✅ Schema meta-validation passed");
+          console.log("✅ gptp.schema.json is valid");
           EOF
 
-      - name: ✅ Validate `.gptp` example files
+      - name: ✅ Validate example .gptp files
         run: |
           node <<'EOF'
           const fs = require('fs');
@@ -59,7 +60,7 @@ jobs:
           const Ajv = require('ajv').default;
           const addFormats = require('ajv-formats');
 
-          const ajv = new Ajv({ strict: true, allErrors: true });
+          const ajv = new Ajv({ strict: true, allowUnionTypes: true, allErrors: true });
           addFormats(ajv);
 
           const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
@@ -101,5 +102,5 @@ jobs:
           }
           EOF
 
-      - name: 🧹 Cleanup
+      - name: Cleanup
         run: rm -rf node_modules package-lock.json
