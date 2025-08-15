@@ -1,5 +1,7 @@
 {
   "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.0.0",
   "title": "Hello World Prompt",
   "description": "Outputs a greeting to the given name.",
   "messages": [
@@ -12,7 +14,6 @@
     "name": {
       "type": "string",
       "description": "The person to greet",
-      "required": true,
       "example": "Alice"
     }
   }

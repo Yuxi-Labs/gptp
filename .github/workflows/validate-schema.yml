@@ -14,23 +14,22 @@ on:
 
 jobs:
   validate:
-    name: Validate schema and example GPTP files
+    name: Validate schema and .gptp examples
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: 🧾 Checkout repo
         uses: actions/checkout@v4
 
-      - name: Use Node.js 20
+      - name: 🧪 Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install AJV CLI and formats
-        run: |
-          npm install --no-save ajv@8 ajv-formats@2
+      - name: 📦 Install AJV + formats
+        run: npm install --no-save ajv@8 ajv-formats@2
 
-      - name: ✅ Meta-validate gptp.schema.json
+      - name: ✅ Meta-validate `gptp.schema.json`
         run: |
           node <<'EOF'
           const fs = require('fs');
@@ -44,15 +43,15 @@ jobs:
           const valid = ajv.validateSchema(schema);
 
           if (!valid) {
-            console.error("❌ gptp.schema.json is not a valid JSON Schema:");
+            console.error("❌ Invalid JSON Schema in gptp.schema.json:");
             console.error(ajv.errors);
             process.exit(1);
           }
 
-          console.log("✅ gptp.schema.json is valid");
+          console.log("✅ Schema meta-validation passed");
           EOF
 
-      - name: ✅ Validate example .gptp files
+      - name: ✅ Validate `.gptp` example files
         run: |
           node <<'EOF'
           const fs = require('fs');
@@ -60,7 +59,7 @@ jobs:
           const Ajv = require('ajv').default;
           const addFormats = require('ajv-formats');
 
-          const ajv = new Ajv({ strict: true, allowUnionTypes: true, allErrors: true });
+          const ajv = new Ajv({ strict: true, allErrors: true });
           addFormats(ajv);
 
           const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
@@ -70,7 +69,7 @@ jobs:
           const files = fs.readdirSync(exampleDir).filter(f => f.endsWith('.gptp'));
 
           if (files.length === 0) {
-            console.log("No .gptp files found. Skipping.");
+            console.log("⚠️ No .gptp files found in docs/examples/");
             process.exit(0);
           }
 
@@ -78,22 +77,29 @@ jobs:
 
           for (const file of files) {
             const filePath = path.join(exampleDir, file);
-            const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            try {
+              const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
-            const valid = validate(data);
-            if (!valid) {
-              console.error(`❌ ${file} failed validation:`);
-              console.error(validate.errors);
+              const valid = validate(data);
+              if (!valid) {
+                console.error(`❌ ${file} failed validation:`);
+                console.error(JSON.stringify(validate.errors, null, 2));
+                failures++;
+              } else {
+                console.log(`✅ ${file} passed`);
+              }
+            } catch (err) {
+              console.error(`❌ ${file} could not be read or parsed:`);
+              console.error(err.message);
               failures++;
-            } else {
-              console.log(`✅ ${file} passed`);
             }
           }
 
           if (failures > 0) {
+            console.error(`❌ ${failures} file(s) failed validation`);
             process.exit(1);
           }
           EOF
 
-      - name: Cleanup
+      - name: 🧹 Cleanup
         run: rm -rf node_modules package-lock.json

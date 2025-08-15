@@ -1,5 +1,7 @@
 {
   "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.0.0",
   "title": "FAQ Generator",
   "description": "Generates a JSON FAQ from a given topic.",
   "system": "You are an assistant that writes FAQs in JSON format.",
@@ -13,7 +15,6 @@
     "topic": {
       "type": "string",
       "description": "The subject for the FAQ",
-      "required": true,
       "example": "cloud computing"
     }
   },

@@ -1,5 +1,7 @@
 {
   "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.0.0",
   "title": "Short Story Generator",
   "description": "Writes a short story based on a given setting and protagonist.",
   "system": "You are a creative fiction writer.",
@@ -13,13 +15,11 @@
     "setting": {
       "type": "string",
       "description": "Where the story takes place",
-      "required": true,
       "example": "a post-apocalyptic desert"
     },
     "protagonist": {
       "type": "string",
       "description": "Name of the main character",
-      "required": true,
       "example": "Mira"
     }
   },

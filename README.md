@@ -26,22 +26,23 @@
 
 Each `.gptp` file is a standalone JSON object that includes all necessary information to define a reusable prompt, including:
 
-* **Metadata** (`name`, `description`, `version`)
+* **Metadata** (`title`, `description`, `promptVersion`)
 * **Role-based prompt turns** (`messages` array)
 * **Templated variables** (declared in `variables`, referenced via `{{var}}` syntax)
 * **Optional system instructions** (`system`)
 * **Optional configuration**: rendering hints, execution parameters, output expectations, assets, vision inputs, tests, tools, and connections
 
-GPTP is based on a strict JSON schema with `additionalProperties: false` at the top level. All `.gptp` files must declare a `$schema` field that is used to validate them.
+GPTP is based on a strict JSON schema with `additionalProperties: false` at the top level. All `.gptp` files must declare a `schemaVersion` field that is used to validate them.
 
 ## Required Fields
 
 ```json
 {
-  "$schema": "./schema/gptp.schema.json",
-  "name": "Prompt Name",
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.0.0",
+  "title": "Prompt Name",
   "description": "What this prompt does",
-  "version": "1.1.0",
   "messages": [
     { "role": "user", "content": "Say hello to {{name}}" }
   ]
@@ -52,15 +53,17 @@ GPTP is based on a strict JSON schema with `additionalProperties: false` at the 
 
 | Key             | Required | Type   | Notes                                          |
 | --------------- | -------- | ------ | ---------------------------------------------- |
-| `name`          | Yes      | string | Title of the prompt                            |
+| `$doctype`      | Yes      | string | Format identifier (`gptp`)                     |
+| `schemaVersion` | Yes      | string | Schema version (e.g. `1.2.0`)                  |
+| `promptVersion` | Yes      | string | Prompt content version                         |
+| `title`         | Yes      | string | Title of the prompt                            |
 | `description`   | Yes      | string | Human-readable summary                         |
-| `version`       | Yes      | string | Semver (e.g. `1.1.0`)                          |
 | `messages`      | Yes      | array  | List of `{role, content}` turns                |
 | `system`        | No       | string | High-level instruction                         |
-| `variables`     | No       | array  | Input parameters (templated with `{{var}}`)    |
+| `variables`     | No       | object | Input parameters (templated with `{{var}}`)    |
 | `metadata`      | No       | object | Tags, author, creation date, compatibility     |
 | `rendering`     | No       | object | UI/display hints                               |
-| `output_format` | No       | string | `markdown` \| `json` \| `plain-text` \| `html` |
+| `output_format` | No       | string | `markdown` \\| `json` \\| `plain-text` \\| `html` |
 | `output_schema` | No       | object | JSON Schema for expected output                |
 | `params`        | No       | object | Model call parameters                          |
 | `connections`   | No       | object | Provider config using env substitution         |
@@ -76,15 +79,15 @@ GPTP is based on a strict JSON schema with `additionalProperties: false` at the 
 
 ## Schema Version
 
-The `$schema` field points to the canonical schema URL. For version `1.1.0`, that is:
+The `schemaVersion` field identifies the specific version of the GPTP specification. For version `1.2.0`, it is:
 
-```bash
-https://raw.githubusercontent.com/Yuxi-Labs/gptp/refs/tags/v1.1.0/schema/gptp.schema.json
+```json
+"schemaVersion": "1.2.0"
 ```
 
 ## Format Status
 
-* **Current schema**: v1.1.0
+* **Current schema**: v1.2.0
 * **Stability**: Stable
 * **Schema language**: JSON Schema Draft-07
 * **Media type** (non-registered): `application/vnd.yuxilabs.gptp+json`
@@ -103,6 +106,6 @@ Tools and runtimes can render `.gptp` into formats suitable for:
 The full specification is available at:
 
 * [`/docs/gptp-spec.md`](docs/gptp-spec.md)
-* [`/schema/gptp.schema.json`](schema/gptp.schema.json)
+* [`/schema/gptp.schema.v1.2.0.json`](schema/gptp.schema.v1.2.0.json)
 
-All conformance claims must validate against the schema referenced by `$schema`.
+All conformance claims must validate against the schema referenced by `schemaVersion`.

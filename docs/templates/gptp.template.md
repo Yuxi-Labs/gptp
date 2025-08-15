@@ -3,88 +3,88 @@
 
 ```jsonc
 {
-  "$schema": "./schema/gptp.schema.json", // Enables validation & autocomplete; spec version implied by $id
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",                 // Schema used for validation (spec version)
+  "promptVersion": "1.0.0",                 // Your prompt's semantic version
 
-  "name": "Example Prompt",               // REQUIRED — title of the prompt
-  "description": "Demonstrates the GPTP v1.1.0 structure", // REQUIRED — what it does
+  "title": "Example Prompt",                // REQUIRED — prompt title
+  "description": "Demonstrates the GPTP v1.2.0 structure",
 
-  "version": "1.1.0",                      // REQUIRED — prompt’s own semver (not spec version)
+  "system": "You are a helpful assistant.", // Optional — can be normalized into messages
 
-  "system": "You are a helpful assistant.", // OPTIONAL — system-level instructions
-
-  "messages": [                            // REQUIRED — core prompt turns (chat style)
+  "messages": [
     {
-      "role": "user",                      // REQUIRED — one of system | user | assistant
-      "content": "Say hello to {{who}}"    // REQUIRED — text; {{var}} placeholders replaced at runtime
+      "role": "user",
+      "content": "Say hello to {{who}}"
     }
   ],
 
-  "variables": [                           // OPTIONAL — templated inputs; injected with String(value)
-    {
-      "name": "who",                        // REQUIRED — variable identifier
-      "description": "Name of the person to greet", // OPTIONAL
-      "required": true,                     // OPTIONAL — default is true
-      "example": "Alice"                     // OPTIONAL — example value
+  "variables": {
+    "who": {
+      "type": "string",
+      "description": "Name of the person to greet",
+      "required": true,
+      "example": "Alice"
     }
-  ],
-
-  "metadata": {                             // OPTIONAL — extra info; tools MAY ignore
-    "tags": ["example", "demo"],            // Keywords
-    "created_by": "Yuxi Labs",              // Author or org
-    "created_at": "2025-07-09T16:00:00Z",   // ISO 8601 date-time
-    "model_compatibility": ["gpt-4", "gpt-3.5-turbo"] // Compatible models
   },
 
-  "rendering": {                            // OPTIONAL — UI/display hints; tools MAY ignore
-    "style": "chat",                        // chat | single-shot | template
-    "instructions_position": "top"          // top | inline | none
+  "metadata": {
+    "tags": ["example", "demo"],
+    "created_by": "Yuxi Labs",
+    "created_at": "2025-07-09T16:00:00Z",
+    "model_compatibility": ["gpt-4", "gpt-3.5-turbo"]
   },
 
-  "output_format": "markdown",              // OPTIONAL — markdown | json | plain-text | html
-
-  "params": {                                // OPTIONAL — request parameters
-    "model": "gpt-4",                        // Model name
-    "temperature": 0.7,                      // [0, 2]
-    "top_p": 0.9,                             // [0, 1]
-    "max_tokens": 512                         // >=1
+  "rendering": {
+    "style": "chat",
+    "instructions_position": "top"
   },
 
-  "connections": {                           // OPTIONAL — provider configs; may include ${env:VAR}
-    "active": "openai",                      // Active provider key
+  "output_format": "markdown",
+
+  "params": {
+    "model": "gpt-4",
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "max_tokens": 512
+  },
+
+  "connections": {
+    "active": "openai",
     "providers": {
       "openai": {
-        "type": "openai",                     // Provider type
-        "endpoint": "https://api.openai.com/v1", // API endpoint
-        "deployment": "gpt-4",                // Deployment name/version
-        "api_key": "${env:OPENAI_API_KEY}"    // MUST NOT inline secrets
+        "type": "openai",
+        "endpoint": "https://api.openai.com/v1",
+        "deployment": "gpt-4",
+        "api_key": "${env:OPENAI_API_KEY}"
       }
     }
   },
 
-  "assets": [                                 // OPTIONAL — hint files; runners SHOULD attach if supported
+  "assets": [
     {
-      "path": "docs/example.md",              // Path to asset file
-      "media_type": "text/markdown",          // MIME type
-      "purpose": "context",                   // context | example | citation | other
+      "path": "docs/example.md",
+      "media_type": "text/markdown",
+      "purpose": "context",
       "description": "Background information for the prompt"
     }
   ],
 
-  "license": "MIT",                           // OPTIONAL — SPDX license ID
-  "usage_notes": "Replace {{who}} with a provided name before sending.", // OPTIONAL
+  "license": "MIT",
+  "usage_notes": "Replace {{who}} with a provided name before sending.",
 
-  "provenance": {                             // OPTIONAL — integrity and signing info
-    "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef", // 64-char hex
-    "signature": "optional-signature-data"    // Optional opaque signature
+  "provenance": {
+    "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "signature": "optional-signature-data"
   },
 
-  "secrets": ["OPENAI_API_KEY"],              // OPTIONAL — required env var names (no values)
+  "secrets": ["OPENAI_API_KEY"],
 
-  "tools": [                                  // OPTIONAL — tool/function definitions
+  "tools": [
     {
-      "name": "search",                       // REQUIRED — tool name
-      "description": "Search the web for information", // Optional
-      "parameters_schema": {                  // Optional — JSON Schema for tool parameters
+      "name": "search",
+      "description": "Search the web for information",
+      "parameters_schema": {
         "type": "object",
         "properties": {
           "query": { "type": "string" }
@@ -94,26 +94,26 @@
     }
   ],
 
-  "vision": {                                 // OPTIONAL — vision capabilities
-    "allow_images": true,                     // Allow image input
+  "vision": {
+    "allow_images": true,
     "inputs": [
       {
-        "name": "reference_photo",            // REQUIRED — vision input name
-        "media_type": "image/png",            // REQUIRED — MIME type
-        "description": "Provide a PNG image for analysis" // Optional
+        "name": "reference_photo",
+        "media_type": "image/png",
+        "description": "Provide a PNG image for analysis"
       }
     ]
   },
 
-  "tests": [                                  // OPTIONAL — self-tests
+  "tests": [
     {
-      "name": "hello-world",                  // REQUIRED — test name
-      "input": { "who": "World" },             // REQUIRED — variables to use
-      "expect_contains": ["Hello"],           // Output must contain these strings
-      "expect_exact": "Hello World"           // Output must match exactly (optional)
+      "name": "hello-world",
+      "input": { "who": "World" },
+      "expect_contains": ["Hello"],
+      "expect_exact": "Hello World"
     }
   ],
 
-  "extends": "./base-prompt.gptp"             // OPTIONAL — inherit from another .gptp
+  "extends": "./base-prompt.gptp"
 }
 ```
