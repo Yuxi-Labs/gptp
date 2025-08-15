@@ -106,6 +106,6 @@ Tools and runtimes can render `.gptp` into formats suitable for:
 The full specification is available at:
 
 * [`/docs/gptp-spec.md`](docs/gptp-spec.md)
-* [`/schema/gptp.schema.v1.2.0.json`](schema/gptp.schema.v1.2.0.json)
+* [`/schema/gptp.schema.json`](schema/gptp.schema.json)
 
 All conformance claims must validate against the schema referenced by `schemaVersion`.
