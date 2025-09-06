@@ -281,7 +281,10 @@
         "properties": { "output_format": { "const": "json" } },
         "required": ["output_format"]
       },
-      "then": { "required": ["output_schema"] }
+      "then": {
+        "properties": { "output_schema": {} },
+        "required": ["output_schema"]
+      }
     }
   ],
 
