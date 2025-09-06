@@ -64,13 +64,13 @@ GPTP is based on a strict JSON schema with `additionalProperties: false` at the 
 | `metadata`      | No       | object | Tags, author, creation date, compatibility     |
 | `rendering`     | No       | object | UI/display hints                               |
 | `output_format` | No       | string | `markdown` \\| `json` \\| `plain-text` \\| `html` |
-| `output_schema` | No       | object | JSON Schema for expected output                |
+| `output_schema` | Cond.    | object | JSON Schema for expected output; required when `output_format` = `json` |
 | `params`        | No       | object | Model call parameters                          |
 | `connections`   | No       | object | Provider config using env substitution         |
-| `assets`        | No       | array  | Attachments with path + MIME type              |
+| `assets`        | No       | array  | Attachments with path + MIME type (`type/subtype`) |
 | `tools`         | No       | array  | Tool/function declarations                     |
 | `vision`        | No       | object | Expected image inputs                          |
-| `tests`         | No       | array  | Self-checks for prompt output                  |
+| `tests`         | No       | array  | Self-checks for prompt output; each item must include at least one expectation (`expect_contains`/`expect_exact`/`expect_json_schema`/`expect`) |
 | `extends`       | No       | string | Relative path to base `.gptp`                  |
 | `license`       | No       | string | SPDX ID (e.g., MIT)                            |
 | `usage_notes`   | No       | string | Freeform tips                                  |
@@ -109,3 +109,28 @@ The full specification is available at:
 * [`/schema/gptp.schema.json`](schema/gptp.schema.json)
 
 All conformance claims must validate against the schema referenced by `schemaVersion`.
+
+## Conformance notes (v1.2.0)
+
+- If `output_format` is `json`, then `output_schema` is required.
+- `assets[].media_type` and `vision.inputs[].media_type` must be valid MIME patterns (`type/subtype`).
+- `provenance.sha256` must be a 64‑char hex string (case-insensitive). `provenance.signature` should be base64url (A–Z, a–z, 0–9, `_`, `-`, optional padding `=`).
+- `params` is closed to unknown keys but allows vendor extensions prefixed with `x-` (e.g., `x-provider-knob`).
+- Each `tests` item must specify at least one expectation: `expect_contains`, `expect_exact`, `expect_json_schema`, or `expect`.
+- Extension points at the root: keys matching `parameters`, `output_contract`, `project`, and any `x-` prefixed keys are allowed for forward compatibility.
+
+## Editor integration (optional)
+
+To enable validation and auto-completion for `*.gptp` files in editors that support JSON Schema associations:
+
+```json
+// .vscode/settings.json
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["*.gptp"],
+      "url": "https://raw.githubusercontent.com/Yuxi-Labs/gptp/refs/tags/v1.2.0/schema/gptp.schema.json"
+    }
+  ]
+}
+```
