@@ -256,10 +256,10 @@
           }
         },
         "anyOf": [
-          { "required": ["expect_contains"] },
-          { "required": ["expect_exact"] },
-          { "required": ["expect_json_schema"] },
-          { "required": ["expect"] }
+          { "properties": { "expect_contains": {} }, "required": ["expect_contains"] },
+          { "properties": { "expect_exact": {} }, "required": ["expect_exact"] },
+          { "properties": { "expect_json_schema": {} }, "required": ["expect_json_schema"] },
+          { "properties": { "expect": {} }, "required": ["expect"] }
         ]
       }
     },
