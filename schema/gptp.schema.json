@@ -118,6 +118,9 @@
     "params": {
       "type": "object",
       "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {}
+      },
       "properties": {
         "model": { "type": "string" },
         "temperature": { "type": "number", "minimum": 0, "maximum": 2 },
@@ -168,7 +171,7 @@
         "additionalProperties": false,
         "properties": {
           "path": { "type": "string" },
-          "media_type": { "type": "string" },
+      "media_type": { "type": "string", "pattern": "^[\\w.+-]+\/[\\w.+-]+$" },
           "purpose": {
             "type": "string",
             "enum": ["context", "example", "citation", "other"]
@@ -178,7 +181,7 @@
       }
     },
 
-    "license": { "type": "string" },
+    "license": { "type": "string", "pattern": "^[A-Za-z0-9-.+]+$", "description": "SPDX license identifier (e.g., MIT, Apache-2.0)." },
     "usage_notes": { "type": "string" },
 
     "provenance": {
@@ -187,9 +190,9 @@
       "properties": {
         "sha256": {
           "type": "string",
-          "pattern": "^[a-f0-9]{64}$"
+      "pattern": "^[A-Fa-f0-9]{64}$"
         },
-        "signature": { "type": "string" }
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9_-]+=*$", "description": "Detached signature (base64url)." }
       }
     },
 
@@ -225,7 +228,7 @@
             "additionalProperties": false,
             "properties": {
               "name": { "type": "string" },
-              "media_type": { "type": "string" },
+              "media_type": { "type": "string", "pattern": "^[\\w.+-]+\/[\\w.+-]+$" },
               "description": { "type": "string" }
             }
           }
@@ -251,7 +254,13 @@
           "expect": {
             "type": ["string", "number", "object", "array", "boolean", "null"]
           }
-        }
+        },
+        "anyOf": [
+          { "required": ["expect_contains"] },
+          { "required": ["expect_exact"] },
+          { "required": ["expect_json_schema"] },
+          { "required": ["expect"] }
+        ]
       }
     },
 
@@ -265,6 +274,16 @@
     "^(parameters|output_contract|project)$": {},
     "^x-": {}
   },
+
+  "allOf": [
+    {
+      "if": {
+        "properties": { "output_format": { "const": "json" } },
+        "required": ["output_format"]
+      },
+      "then": { "required": ["output_schema"] }
+    }
+  ],
 
   "additionalProperties": false
 }
