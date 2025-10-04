@@ -7,7 +7,7 @@ The GPTP file format packages prompts as portable JSON artifacts. It is designed
 
 ## 2. NORMATIVE REFERENCES
 Schema (`$id`):
-https://raw.githubusercontent.com/Yuxi-Labs/gptp/refs/tags/v1.2.0/schema/gptp.schema.v1.2.0.json
+https://raw.githubusercontent.com/Yuxi-Labs/gptp/refs/tags/v1.2.0/schema/gptp.schema.json
 
 All files claiming conformance to GPTP v1.2 MUST validate against the schema above.
 

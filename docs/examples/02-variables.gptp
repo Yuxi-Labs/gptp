@@ -1,0 +1,17 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.1.0",
+  "title": "Variables Example",
+  "description": "Uses a templated variable in the user message.",
+  "messages": [
+    { "role": "user", "content": "Greet {{name}} with enthusiasm." }
+  ],
+  "variables": {
+    "name": {
+      "type": "string",
+      "description": "Name to greet",
+      "example": "Ada"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.3.0",
+  "title": "Output JSON Contract Example",
+  "description": "Requires the model to produce JSON matching a schema.",
+  "messages": [
+    { "role": "user", "content": "Extract title and summary from: {{text}}" }
+  ],
+  "variables": {
+    "text": { "type": "string", "description": "Input text" }
+  },
+  "output_format": "json",
+  "output_schema": {
+    "type": "object",
+    "required": ["title", "summary"],
+    "properties": {
+      "title": { "type": "string" },
+      "summary": { "type": "string" }
+    },
+    "additionalProperties": false
+  }
+}

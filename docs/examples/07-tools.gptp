@@ -1,0 +1,23 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.3.1",
+  "title": "Tools Example",
+  "description": "Defines a search tool with a parameter schema.",
+  "system": "Use tools when helpful. If unsure, ask for clarification.",
+  "messages": [
+    { "role": "user", "content": "Find who invented the World Wide Web." }
+  ],
+  "tools": [
+    {
+      "name": "search",
+      "description": "Search the web for information.",
+      "parameters_schema": {
+        "type": "object",
+        "required": ["query"],
+        "properties": { "query": { "type": "string" } },
+        "additionalProperties": false
+      }
+    }
+  ]
+}

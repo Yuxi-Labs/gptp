@@ -6,10 +6,7 @@
   "description": "Writes a short story based on a given setting and protagonist.",
   "system": "You are a creative fiction writer.",
   "messages": [
-    {
-      "role": "user",
-      "content": "Write a short story set in {{setting}} with a protagonist named {{protagonist}}."
-    }
+    { "role": "user", "content": "Write a short story set in {{setting}} with a protagonist named {{protagonist}}." }
   ],
   "variables": {
     "setting": {

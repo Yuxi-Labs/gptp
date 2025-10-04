@@ -5,10 +5,7 @@
   "title": "Hello World Prompt",
   "description": "Outputs a greeting to the given name.",
   "messages": [
-    {
-      "role": "user",
-      "content": "Say hello to {{name}}."
-    }
+    { "role": "user", "content": "Say hello to {{name}}." }
   ],
   "variables": {
     "name": {

@@ -1,0 +1,14 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.5.0",
+  "title": "Extends Example",
+  "description": "Extends base system+rendering prompt, overriding title and adding variables.",
+  "extends": "./03-system-rendering.gptp",
+  "messages": [
+    { "role": "user", "content": "Explain {{topic}}." }
+  ],
+  "variables": {
+    "topic": { "type": "string", "description": "Topic to explain" }
+  }
+}

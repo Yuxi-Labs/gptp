@@ -1,0 +1,15 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.1.0",
+  "title": "System + Rendering Example",
+  "description": "Shows system instruction and rendering hints.",
+  "system": "You are a concise and polite assistant.",
+  "messages": [
+    { "role": "user", "content": "Explain the benefits of test-driven development." }
+  ],
+  "rendering": {
+    "style": "chat",
+    "instructions_position": "top"
+  }
+}

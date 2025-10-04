@@ -1,0 +1,24 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.2.0",
+  "title": "Assets and Vision Example",
+  "description": "References an external markdown asset and declares an image input.",
+  "messages": [
+    { "role": "user", "content": "Analyze the attached background and the image input named 'reference_photo'." }
+  ],
+  "assets": [
+    {
+      "path": "../reference/background.md",
+      "media_type": "text/markdown",
+      "purpose": "context",
+      "description": "Background material"
+    }
+  ],
+  "vision": {
+    "allow_images": true,
+    "inputs": [
+      { "name": "reference_photo", "media_type": "image/png", "description": "A PNG image for analysis" }
+    ]
+  }
+}

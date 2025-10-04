@@ -1,0 +1,22 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.1.1",
+  "title": "Params Example",
+  "description": "Demonstrates common model parameters.",
+  "messages": [
+    { "role": "user", "content": "Summarize the following text in one sentence: {{text}}" }
+  ],
+  "variables": {
+    "text": { "type": "string", "description": "Text to summarize" }
+  },
+  "params": {
+    "model": "gpt-4",
+    "temperature": 0.3,
+    "top_p": 0.9,
+    "max_tokens": 200,
+    "stop": ["\n\n"],
+    "frequency_penalty": 0.2,
+    "presence_penalty": 0.1
+  }
+}

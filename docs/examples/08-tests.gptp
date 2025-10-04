@@ -1,0 +1,17 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.4.0",
+  "title": "Tests Example",
+  "description": "Includes self-check tests for the prompt.",
+  "messages": [
+    { "role": "user", "content": "Say hello to {{who}}." }
+  ],
+  "variables": {
+    "who": { "type": "string", "description": "Who to greet", "example": "World" }
+  },
+  "tests": [
+    { "name": "contains-name", "input": { "who": "World" }, "expect_contains": ["World"] },
+    { "name": "exact-sample",  "input": { "who": "Ada" },   "expect_exact": "Hello Ada" }
+  ]
+}

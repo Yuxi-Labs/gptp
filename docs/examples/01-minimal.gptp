@@ -1,0 +1,10 @@
+{
+  "$doctype": "gptp",
+  "schemaVersion": "1.2.0",
+  "promptVersion": "1.0.0",
+  "title": "Minimal Example",
+  "description": "A minimal GPTP file with a single user message.",
+  "messages": [
+    { "role": "user", "content": "Say hello." }
+  ]
+}
