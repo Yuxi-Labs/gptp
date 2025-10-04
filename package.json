@@ -1,0 +1,15 @@
+{
+  "name": "gptp",
+  "private": true,
+  "description": "Dev tooling for validating .gptp files against the schema",
+  "license": "MIT",
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^2.1.1"
+  },
+  "scripts": {
+    "validate:gptp": "node scripts/validate-gptp.mjs",
+    "validate:one": "ajv validate -s schema/gptp.schema.json -d"
+  }
+}
