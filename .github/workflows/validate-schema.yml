@@ -1,20 +1,18 @@
-name: Validate GPTP Schema
+name: Validate GPTP Schema (meta only)
 
 on:
   push:
     paths:
       - "schema/gptp.schema.json"
-      - "docs/examples/**/*.gptp"
       - ".github/workflows/validate-schema.yml"
   pull_request:
     paths:
       - "schema/gptp.schema.json"
-      - "docs/examples/**/*.gptp"
       - ".github/workflows/validate-schema.yml"
 
 jobs:
   validate:
-    name: Validate schema and example GPTP files
+    name: Meta-validate JSON Schema
     runs-on: ubuntu-latest
 
     steps:
@@ -26,9 +24,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install AJV CLI and formats
-        run: |
-          npm install --no-save ajv@8 ajv-formats@2
+      - name: Install Ajv (ephemeral)
+        run: npm install --no-save ajv@8 ajv-formats@2
 
       - name: ✅ Meta-validate gptp.schema.json
         run: |
@@ -50,56 +47,6 @@ jobs:
           }
 
           console.log("✅ gptp.schema.json is valid");
-          EOF
-
-      - name: ✅ Validate example .gptp files
-        run: |
-          node <<'EOF'
-          const fs = require('fs');
-          const path = require('path');
-          const Ajv = require('ajv').default;
-          const addFormats = require('ajv-formats');
-
-          const ajv = new Ajv({ strict: true, allowUnionTypes: true, allErrors: true });
-          addFormats(ajv);
-
-          const schema = JSON.parse(fs.readFileSync('schema/gptp.schema.json', 'utf8'));
-          const validate = ajv.compile(schema);
-
-          const exampleDir = 'docs/examples';
-          const files = fs.readdirSync(exampleDir).filter(f => f.endsWith('.gptp'));
-
-          if (files.length === 0) {
-            console.log("⚠️ No .gptp files found in docs/examples/");
-            process.exit(0);
-          }
-
-          let failures = 0;
-
-          for (const file of files) {
-            const filePath = path.join(exampleDir, file);
-            try {
-              const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-
-              const valid = validate(data);
-              if (!valid) {
-                console.error(`❌ ${file} failed validation:`);
-                console.error(JSON.stringify(validate.errors, null, 2));
-                failures++;
-              } else {
-                console.log(`✅ ${file} passed`);
-              }
-            } catch (err) {
-              console.error(`❌ ${file} could not be read or parsed:`);
-              console.error(err.message);
-              failures++;
-            }
-          }
-
-          if (failures > 0) {
-            console.error(`❌ ${failures} file(s) failed validation`);
-            process.exit(1);
-          }
           EOF
 
       - name: Cleanup

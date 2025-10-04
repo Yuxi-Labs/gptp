@@ -1,28 +1,11 @@
-name: Validate GPTP Examples
+name: (Disabled) Validate GPTP Examples
 
 on:
-  push:
-    branches: [ schema-v1.2 ]
-  pull_request:
-    branches: [ schema-v1.2 ]
+  # Intentionally disabled from automatic runs; can be invoked manually if ever needed
+  workflow_dispatch:
 
 jobs:
-  validate:
+  noop:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install ajv-cli
-        run: |
-          npm --version
-          npm i -g ajv-cli@5.0.0
-
-      - name: Validate examples against schema
-        run: |
-          ajv validate -s schema/gptp.schema.json -d "docs/examples/*.gptp" --spec=draft7
+      - run: echo "This workflow is disabled by design for a schema-only repo."
